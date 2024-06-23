@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ServerStats">
+    <output-path>$PROJECT_DIR$/out/artifacts/ServerStats</output-path>
+    <root id="archive" name="ServerStats.jar">
+      <element id="module-output" name="ServerStats.main" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>

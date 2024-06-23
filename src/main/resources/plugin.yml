@@ -1,0 +1,13 @@
+name: ServerStats
+version: '${version}'
+main: dev.jonaas.serverstats.ServerStats
+api-version: '1.21'
+load: STARTUP
+authors: [Jonas Schips]
+description: ServerStats plugin for PaperMC Servers
+website: jonaas.dev
+
+commands:
+  togglestats:
+    description: Toggles the display of server statistics in form of a BossBar.
+    usage: /togglestats
