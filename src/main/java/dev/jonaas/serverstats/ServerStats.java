@@ -74,6 +74,12 @@ public class ServerStats extends JavaPlugin implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
+                if (!player.isOp()) {
+                    player.sendMessage("You don't have permission to execute this command.");
+                    return true;
+                }
+
+
                 if (args.length == 0) {
                     toggleStats(player);
                 } else if (args.length == 2 && args[0].equalsIgnoreCase("color")) {
