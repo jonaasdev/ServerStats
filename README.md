@@ -11,5 +11,5 @@ This PaperMC Plugin for the Minecraft Version 1.21 shows some your server statis
 > You can change color with by using `/togglestats color <color>` ingame.
 > * Available colors are: Blue, Green, Red, Pink, Purple
 > 
-> You can change the style by using `/togglestats style <style>`ingame.
+> You can change the style by using `/togglestats style <style>` ingame.
 > * Available styles are: Solid, Segmented_6, Segmented_10, Segmented_12, Segmented_20
