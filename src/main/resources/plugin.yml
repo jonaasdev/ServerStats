@@ -10,4 +10,4 @@ website: jonaas.dev
 commands:
   togglestats:
     description: Toggles the display of server statistics in form of a BossBar.
-    usage: /togglestats
+    usage: /togglestats [string] [value]

@@ -11,23 +11,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ServerStats extends JavaPlugin implements CommandExecutor {
-    private BossBar bossBar;
-    private boolean isBossBarVisible;
+    private Map<Player, BossBar> playerBossBars = new HashMap<>();
+    private Map<Player, BarColor> playerColors = new HashMap<>();
+    private Map<Player, BarStyle> playerStyles = new HashMap<>();
 
     @Override
     public void onEnable() {
-        bossBar = Bukkit.createBossBar("Server Stats", BarColor.PINK, BarStyle.SOLID);
-        bossBar.setVisible(true);
-        isBossBarVisible = false;
-
         this.getCommand("togglestats").setExecutor(this);
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (isBossBarVisible) {
-                    updateBossBar();
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (playerBossBars.containsKey(player)) {
+                        updateBossBar(player);
+                    }
                 }
             }
         }.runTaskTimer(this, 0L, 20L);
@@ -35,10 +37,14 @@ public class ServerStats extends JavaPlugin implements CommandExecutor {
 
     @Override
     public void onDisable() {
-        bossBar.removeAll();
+        for (BossBar bossBar : playerBossBars.values()) {
+            bossBar.removeAll();
+        }
+        playerBossBars.clear();
     }
 
-    private void updateBossBar() {
+    private void updateBossBar(Player player) {
+        BossBar bossBar = playerBossBars.get(player);
         int onlinePlayers = Bukkit.getOnlinePlayers().size();
         long freeMemory = Runtime.getRuntime().freeMemory() / (1024 * 1024);
         long maxMemory = Runtime.getRuntime().maxMemory() / (1024 * 1024);
@@ -68,24 +74,65 @@ public class ServerStats extends JavaPlugin implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                if (isBossBarVisible) {
-                    bossBar.removeAll();
-                    bossBar.setVisible(false);
-                    player.sendMessage("Server statistics hidden.");
+                if (args.length == 0) {
+                    toggleStats(player);
+                } else if (args.length == 2 && args[0].equalsIgnoreCase("color")) {
+                    changeColor(player, args[1]);
+                } else if (args.length == 2 && args[0].equalsIgnoreCase("style")) {
+                    changeStyle(player, args[1]);
                 } else {
-                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                        bossBar.addPlayer(onlinePlayer);
-                    }
-                    bossBar.setVisible(true);
-                    player.sendMessage("Server statistics shown.");
+                    sender.sendMessage("Usage: /togglestats [string] [value]");
                 }
-
-                isBossBarVisible = !isBossBarVisible;
                 return true;
             }
             sender.sendMessage("This command can only be executed by a Player.");
             return true;
         }
         return false;
+    }
+
+    private void toggleStats(Player player ) {
+        if (playerBossBars.containsKey(player)) {
+            BossBar bossBar = playerBossBars.get(player);
+            bossBar.removeAll();
+            playerBossBars.remove(player);
+            player.sendMessage("Server statistics are now hidden.");
+        } else {
+            BarColor color = playerColors.getOrDefault(player, BarColor.PURPLE);
+            BarStyle style = playerStyles.getOrDefault(player, BarStyle.SOLID);
+            BossBar bossBar = Bukkit.createBossBar("Server stats", color, style);
+            bossBar.addPlayer(player);
+            bossBar.setVisible(true);
+            playerBossBars.put(player, bossBar);
+            player.sendMessage("Server statistics are now shown.");
+        }
+    }
+
+    private void changeColor(Player player, String colorStr) {
+        try {
+            BarColor color = BarColor.valueOf(colorStr.toUpperCase());
+            playerColors.put(player, color);
+            if (playerBossBars.containsKey(player)) {
+                BossBar bossBar = playerBossBars.get(player);
+                bossBar.setColor(color);
+            }
+            player.sendMessage("Bossbar color was changed to " + colorStr.toUpperCase() + ".");
+        } catch (IllegalArgumentException e) {
+            player.sendMessage("Invalid color.");
+        }
+    }
+
+    private void changeStyle(Player player, String styleStr) {
+        try {
+            BarStyle style = BarStyle.valueOf(styleStr.toUpperCase());
+            playerStyles.put(player, style);
+            if (playerBossBars.containsKey(player)) {
+                BossBar bossBar = playerBossBars.get(player);
+                bossBar.setStyle(style);
+            }
+            player.sendMessage("Bossbar style was changed to " + styleStr.toUpperCase() + ".");
+        } catch (IllegalArgumentException e) {
+            player.sendMessage("Invalid style.");
+        }
     }
 }
