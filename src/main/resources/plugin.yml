@@ -4,10 +4,24 @@ main: dev.jonaas.serverstats.ServerStats
 api-version: '1.21'
 load: STARTUP
 authors: [Jonas Schips]
-description: ServerStats plugin for PaperMC Servers
+description: ServerStats plugin for 1.21 PaperMC Servers
 website: jonaas.dev
 
 commands:
-  togglestats:
+  serverstats:
     description: Toggles the display of server statistics in form of a BossBar.
-    usage: /togglestats [string] [value]
+    usage: /serverstats [string] [value]
+    permission: serverstats.use
+    permission-message: "You don't have permission to execute this command."
+#  ss-permcheck:
+#    description: Toggles the permission check for using the server statistics command.
+#    usage: /ss-permcheck
+#    permission: serverstats.admin
+#    permission-message: "You don't have permission to execute this command."
+permissions:
+  serverstats.use:
+    description: Allows the player to use the ServerStats commands.
+    default: op
+#  serverstats.admin:
+#    description: Allows the player to toggle the permission check.
+#    default: op
