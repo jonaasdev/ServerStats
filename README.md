@@ -1,5 +1,5 @@
-# Server Stats Plugin
-This PaperMC Plugin for the Minecraft Version 1.21 shows some your server statistics in a simple and easy way in form of a bossbar.
+# Jonaas' Server Stats Plugin
+A simple server statistics Plugin for the upcoming 1.21 [PaperMC](https://papermc.io/downloads/paper) version.
 
 
 ![ServerStats](https://github.com/jonaasdev/ServerStats/assets/104238285/ca97ac4d-41df-4241-be2f-49c0138304a2)
@@ -7,10 +7,16 @@ This PaperMC Plugin for the Minecraft Version 1.21 shows some your server statis
 
 ---
 ### Usage:
-> You can toggle this with the `/togglestats` command.
+> `/togglestats`
+> * Toggles the BossBar on and off.
 >
-> You can change color with by using `/togglestats color <color>` ingame.
-> * Available colors are: White, Green, Blue, Purple, Pink & Red
+> `/togglestats color <color>`
+> * Lets you change the color of the BossBar.
+> * Available colors are: White, Green, Blue, Purple, Pink, Red & Yellow
 > 
-> You can change the style by using `/togglestats style <style>` ingame.
+> `/togglestats style <style>`
+> * Lets you chnage the stlye of the BossBar.
 > * Available styles are: Solid, Segmented_6, Segmented_10, Segmented_12 & Segmented_20
+>
+> `/togglestats autocolor`
+> * Lets the BossBar color change automatically from Green > Yellow > Red depending on memory usage.
