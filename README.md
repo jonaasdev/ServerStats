@@ -1,9 +1,7 @@
 # Jonaas' Server Stats Plugin
-A simple server statistics Plugin for the upcoming 1.21 [PaperMC](https://papermc.io/downloads/paper) version.
+A simple server statistics Plugin for the 1.21 [PaperMC](https://papermc.io/downloads/paper) version.
 
-
-![ServerStats](https://github.com/jonaasdev/ServerStats/assets/104238285/ca97ac4d-41df-4241-be2f-49c0138304a2)
-
+# ⚠ Development for this Plugin is currently stopped. It will be moved to a new project which is going to release anytime soon. Stay tuned! 
 
 ---
 ### Usage:
